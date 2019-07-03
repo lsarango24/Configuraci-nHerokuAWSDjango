@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -38,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'prueba',
-    'bootstrap4'
+    'bootstrap4',
+    'import_export',
+    'storage',
 ]
 
 MIDDLEWARE = [
@@ -132,3 +135,20 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+django_heroku.settings(locals())
+
+# configuración s3
+DEFAULT_FILE_STORAGE = 'Configuracion.storage_backends.MediaStorage'
+AWS_ACCESS_KEY_ID = 'AKIA56SEM4Z7SMKGBIP3'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'configuraciondjango'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_ACL = None
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+MEDIA_ROOT = ''
+DEFAULT_S3_PATH = 'media/'
+MEDIA_URL = 'http://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME

@@ -16,12 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from prueba import views
+from prueba.views import ListarProducto
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    #path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('Index/', views.crear_producto, name='crear_producto'),
+    path('Listar/', ListarProducto.as_view(), name='ListarProducto'),
+   
 ]
 
 if settings.DEBUG:
