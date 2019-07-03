@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -139,8 +140,8 @@ django_heroku.settings(locals())
 
 # configuración s3
 DEFAULT_FILE_STORAGE = 'Configuracion.storage_backends.MediaStorage'
-AWS_ACCESS_KEY_ID = 'AKIA56SEM4Z7SMKGBIP3'
-AWS_SECRET_ACCESS_KEY = '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'
+AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = 'configuraciondjango'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_DEFAULT_ACL = None
