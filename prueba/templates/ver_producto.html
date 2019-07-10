@@ -1,33 +1,47 @@
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!--stilos-->
+    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+	<!-- STYLE CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>Lista</title>
 </head>
+
 <body>
-        <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Imagen</th>
-                    </tr>
-            </thead>
-                <tbody>
-                    {% if object_list %} {% for producto in object_list %}
-                    <tr>
-                        <td>{{producto.nombre}}</td>
-                        <td><img src="{{ producto.imagen.url }}" alt="" class="img-menu"></td>
-                    </tr>
-                    {% endfor %} {% else %}
+    <button style="margin-top: 10px;margin-bottom: 10px;">
+        <a href="{% url 'crear_producto' %}" style="color: #32383e !important;"><i class="zmdi zmdi-arrow-left"></i>Regresar</a>
+    </button>
+    <table class="table table-dark table-striped" style="display: block; margin: 0 auto; text-align: center;">
+        <thead >
+            <tr >
+                <th >Nombre</th>
+                <th>Imagen</th>
+            </tr>
+        </thead>
+        <tbody >
+            {% if object_list %} {% for producto in object_list %}
+            <tr>
+                <td style="display: flex; justify-items: center; text-align: center;">{{producto.nombre}}</td>
+                <td><img src="{{ producto.imagen.url }}" class="img-avatar col-lg-6" style="display: block; margin: 0 auto; text-align: center;"></td>
+            </tr>
+            {% endfor %} {% else %}
 
-                                    <th>
-                                        <td COLSPAN=7 style=" text-align: center;">"NO HAY REGISTROS PARA MOSTRAR" </td>
-                                    </th>
+            <th>
+            <td COLSPAN=7 style=" text-align: center;">"NO HAY REGISTROS PARA MOSTRAR" </td>
+            </th>
 
-                                    {% endif %}
-                </tbody>
-            </table>
+            {% endif %}
+        </tbody>
+    </table>
 </body>
+
 </html>

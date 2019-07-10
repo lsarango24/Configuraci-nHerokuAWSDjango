@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 {% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='full' %}
+{% load staticfiles %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Inicio</title>
-    <!--bootstrap-->
-    
+    <!--stilos-->
+    <link rel="stylesheet" href="{% static 'fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+	<!-- STYLE CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
+
 <body>
-    <div>
-        <form role='form' method="POST" enctype=multipart/form-data>
-            {% csrf_token %} 
-            {%  bootstrap_form  form  layout='horizontal' %}
-            <div>
-                <button class="btn btn-sm btn-success" type="submit">GUARDAR</button>
-            </div>
-        </form>
+    <div class="wrapper">
+        <div class="inner">
+            <form role='form' class="" method="POST" enctype=multipart/form-data>
+                <h3>CONFIGURACIÓN</h3>
+				<p>Ejemplo de integración de HEROKU, AWS Y DJANGO </p> 
+                {% csrf_token %}
+                {%  bootstrap_form  form  layout='horizontal' %} 
+                <button>Guardar 
+                    <i class="zmdi zmdi-arrow-right"></i>
+                </button>
+            </form>
+        </div>
     </div>
+
+
 </body>
 <!-- bootstrap -->
+
 </html>
