@@ -25,6 +25,7 @@
             <tr >
                 <th >Nombre</th>
                 <th>Imagen</th>
+                <th>Aciones</th>
             </tr>
         </thead>
         <tbody >
@@ -32,6 +33,9 @@
             <tr>
                 <td style="display: flex; justify-items: center; text-align: center;">{{producto.nombre}}</td>
                 <td><img src="{{ producto.imagen.url }}" class="img-avatar col-lg-6" style="display: block; margin: 0 auto; text-align: center;"></td>
+                <td>
+                        <a href="{% url 'eliminar' producto.pk %}">eliminar</a>
+                </td>
             </tr>
             {% endfor %} {% else %}
 

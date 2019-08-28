@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Producto(models.Model):
     nombre = models.CharField(max_length=50)
-    imagen = models.ImageField(upload_to = 'img/producto', null=False)
+    imagen = models.ImageField(upload_to = '', null=False)
     #aparezca en el admin
     class Meta:
         verbose_name= "Producto"

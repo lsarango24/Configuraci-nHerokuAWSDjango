@@ -4,6 +4,11 @@ from .models import *
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
+###Libreria para comunicarte con S3 y borrar 
+import tinys3
+
+## libreria para encriptar las claves
+from decouple import config
 
 # Create your views here.
 def crear_producto(request):
@@ -30,3 +35,14 @@ class crear_product(CreateView):
 class ListarProducto(ListView):
     model = Producto
     template_name = "ver_producto.html"
+
+def eliminar(request, pk):
+    import boto3
+    producto = Producto.objects.get(pk=pk)
+    url = producto.imagen.file
+    # print(str(url))
+    s3_resource = boto3.resource('s3')
+    boto3.set_stream_logger('botocore', level='DEBUG')
+    obj = s3_resource.Object("configuraciondjango", str(url))
+    obj.delete()
+    return redirect('ListarProducto')

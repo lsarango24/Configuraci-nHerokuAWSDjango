@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.crear_producto, name='crear_producto'),
     path('Listar/', ListarProducto.as_view(), name='ListarProducto'),
+    path('Eliminar/<int:pk>', views.eliminar, name='eliminar'),
    
 ]
 
