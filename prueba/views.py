@@ -45,4 +45,5 @@ def eliminar(request, pk):
     boto3.set_stream_logger('botocore', level='DEBUG')
     obj = s3_resource.Object("configuraciondjango", str(url))
     obj.delete()
+    producto.delete()
     return redirect('ListarProducto')
