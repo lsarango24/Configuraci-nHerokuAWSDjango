@@ -4,8 +4,6 @@ from .models import *
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
-###Libreria para comunicarte con S3 y borrar 
-import tinys3
 
 ## libreria para encriptar las claves
 from decouple import config

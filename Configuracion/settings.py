@@ -32,20 +32,32 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'tenant_schemas',
+    'empresas',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'prueba',
     'bootstrap4',
     'import_export',
     'storage',
 ]
+TENANT_APPS = [
+    'prueba'
+]
+
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+TENANT_MODEL = "empresas.Empresa"
+TENANT_DOMAIN_MODEL = "empresas.Domain"
+
+SITE_ID = 1
 
 MIDDLEWARE = [
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+PUBLIC_SCHEMA_URL_CONF = 'Configuracion.public_urls'
 ROOT_URLCONF = 'Configuracion.urls'
 
 TEMPLATES = [
@@ -83,7 +96,7 @@ WSGI_APPLICATION = 'Configuracion.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': 'config',
         'USER': 'postgres',
         'PASSWORD': 'admin123',
@@ -92,7 +105,9 @@ DATABASES = {
 
     }
 }
-
+DATABASE_ROUTERS = (
+    'tenant_schemas.routers.TenantSyncRouter',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
