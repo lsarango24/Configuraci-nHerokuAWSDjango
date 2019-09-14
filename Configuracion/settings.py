@@ -93,7 +93,14 @@ WSGI_APPLICATION = 'Configuracion.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    #...
+)
 
+SOUTH_DATABASE_ADAPTERS = {
+    'DEFAULT': 'south.db.tenant_schemas.postgresql_backend',
+}
 DATABASES = {
     'default': {
         'ENGINE': 'tenant_schemas.postgresql_backend',
