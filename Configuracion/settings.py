@@ -182,14 +182,14 @@ django_heroku.settings(locals())
 DEFAULT_FILE_STORAGE = 'Configuracion.storage_backends.MediaStorage'
 AWS_ACCESS_KEY_ID = config('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = config('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = 'pruebadjango'
+AWS_STORAGE_BUCKET_NAME = 'configuraciondjango'
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_DEFAULT_ACL = None
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_LOCATION = 'static'
-AWS_PUBLIC_MEDIA_LOCATION = '/'
+AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
 MEDIA_ROOT = ''
-DEFAULT_S3_PATH = '/'
-MEDIA_URL = 'http://%s.s3.amazonaws.com/' % AWS_STORAGE_BUCKET_NAME
+DEFAULT_S3_PATH = 'media/'
+MEDIA_URL = 'http://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
