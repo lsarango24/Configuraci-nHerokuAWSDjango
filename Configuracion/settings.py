@@ -149,7 +149,7 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_LOCATION = 'static'
-AWS_PUBLIC_MEDIA_LOCATION = 'media/public'
+AWS_PUBLIC_MEDIA_LOCATION = 'media'
 MEDIA_ROOT = ''
 DEFAULT_S3_PATH = 'media/'
 MEDIA_URL = 'http://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME

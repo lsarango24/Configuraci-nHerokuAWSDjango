@@ -4,8 +4,6 @@ from .models import *
 from django.views.generic import CreateView
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView
-###Libreria para comunicarte con S3 y borrar 
-import tinys3
 
 ## libreria para encriptar las claves
 from decouple import config
@@ -44,7 +42,7 @@ def eliminar(request, pk):
     # print(str(url))
     s3_resource = boto3.resource('s3', aws_access_key_id = config('AWS_ACCESS_KEY_ID'), aws_secret_access_key = config('AWS_SECRET_ACCESS_KEY'))
     boto3.set_stream_logger('botocore', level='DEBUG')
-    obj = s3_resource.Object("pruebadjango", 'media/'+ str(url))
+    obj = s3_resource.Object("configuraciondjango", 'media/'+ str(url))
     obj.delete()
     producto.delete()
     return redirect('ListarProducto')
