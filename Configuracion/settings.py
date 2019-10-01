@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-import django_heroku
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,20 +32,32 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
-INSTALLED_APPS = [
+SHARED_APPS = [
+    'tenant_schemas',
+    'empresas',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'prueba',
     'bootstrap4',
     'import_export',
     'storage',
 ]
+TENANT_APPS = [
+    'prueba',
+]
+
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+
+TENANT_MODEL = "empresas.Empresa"
+TENANT_DOMAIN_MODEL = "empresas.Domain"
+
+SITE_ID = 1
 
 MIDDLEWARE = [
+    'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -55,6 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+PUBLIC_SCHEMA_URL_CONF = 'Configuracion.public_urls'
 ROOT_URLCONF = 'Configuracion.urls'
 
 TEMPLATES = [
@@ -80,10 +93,17 @@ WSGI_APPLICATION = 'Configuracion.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+    #...
+)
 
+# SOUTH_DATABASE_ADAPTERS = {
+#     'DEFAULT': 'south.db.tenant_schemas.postgresql_backend',
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'tenant_schemas.postgresql_backend',
         'NAME': 'config',
         'USER': 'postgres',
         'PASSWORD': 'admin123',
@@ -92,7 +112,9 @@ DATABASES = {
 
     }
 }
-
+DATABASE_ROUTERS = (
+    'tenant_schemas.routers.TenantSyncRouter',
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -136,7 +158,25 @@ STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
+# configuracion automatica para utilizar heroku
 django_heroku.settings(locals())
+
+# Configuracion para utilizar heroku multinetant
+
+# import django_heroku
+# config = locals()
+# django_heroku.settings(config, databases=False)
+# # Manual configuration of database
+# import dj_database_url
+# conn_max_age = config.get('CONN_MAX_AGE', 600)  # Used in django-heroku
+# config['DATABASES'] = {
+#     'default': dj_database_url.parse(
+#         os.environ.get('DATABASE_URL'),    
+#         engine='tenant_schemas.postgresql_backend',
+#         conn_max_age=conn_max_age,
+#         ssl_require=True,
+#     )
+# }
 
 # configuración s3
 DEFAULT_FILE_STORAGE = 'Configuracion.storage_backends.MediaStorage'
