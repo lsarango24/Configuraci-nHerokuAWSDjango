@@ -36,13 +36,12 @@ class ListarProducto(ListView):
 
 def eliminar(request, pk):
     import boto3
-    from decouple import config
     producto = Producto.objects.get(pk=pk)
     url = producto.imagen.file
     # print(str(url))
-    s3_resource = boto3.resource('s3', aws_access_key_id = config('AWS_ACCESS_KEY_ID'), aws_secret_access_key = config('AWS_SECRET_ACCESS_KEY'))
+    s3_resource = boto3.resource('s3')
     boto3.set_stream_logger('botocore', level='DEBUG')
-    obj = s3_resource.Object("pruebadjango", 'media/'+ str(url))
+    obj = s3_resource.Object("configuraciondjango", str(url))
     obj.delete()
     producto.delete()
     return redirect('ListarProducto')
