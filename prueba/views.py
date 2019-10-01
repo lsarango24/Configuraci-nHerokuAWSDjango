@@ -39,7 +39,7 @@ def eliminar(request, pk):
     producto = Producto.objects.get(pk=pk)
     url = producto.imagen.file
     # print(str(url))
-    s3_resource = boto3.resource('s3')
+    s3_resource = boto3.resource('s3', aws_access_key_id =  config('AWS_ACCESS_KEY_ID'), aws_secret_access_key = config('AWS_SECRET_ACCESS_KEY'))
     boto3.set_stream_logger('botocore', level='DEBUG')
     obj = s3_resource.Object("configuraciondjango", 'media/'+ str(url))
     obj.delete()
