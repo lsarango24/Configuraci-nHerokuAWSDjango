@@ -41,11 +41,7 @@ def eliminar(request, pk):
     # print(str(url))
     s3_resource = boto3.resource('s3')
     boto3.set_stream_logger('botocore', level='DEBUG')
-<<<<<<< HEAD
     obj = s3_resource.Object("configuraciondjango", 'media/'+ str(url))
-=======
-    obj = s3_resource.Object("configuraciondjango", str(url))
->>>>>>> parent of abd0cb1... estable eliminar img en s3
     obj.delete()
     producto.delete()
     return redirect('ListarProducto')
