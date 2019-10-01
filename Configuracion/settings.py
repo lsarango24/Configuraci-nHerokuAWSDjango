@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -158,24 +159,24 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 # configuracion automatica para utilizar heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
 
 # Configuracion para utilizar heroku multinetant
 
-import django_heroku
-config = locals()
-django_heroku.settings(config, databases=False)
-# Manual configuration of database
-import dj_database_url
-conn_max_age = config.get('CONN_MAX_AGE', 600)  # Used in django-heroku
-config['DATABASES'] = {
-    'default': dj_database_url.parse(
-        os.environ.get('DATABASE_URL'),    
-        engine='tenant_schemas.postgresql_backend',
-        conn_max_age=conn_max_age,
-        ssl_require=True,
-    )
-}
+# import django_heroku
+# config = locals()
+# django_heroku.settings(config, databases=False)
+# # Manual configuration of database
+# import dj_database_url
+# conn_max_age = config.get('CONN_MAX_AGE', 600)  # Used in django-heroku
+# config['DATABASES'] = {
+#     'default': dj_database_url.parse(
+#         os.environ.get('DATABASE_URL'),    
+#         engine='tenant_schemas.postgresql_backend',
+#         conn_max_age=conn_max_age,
+#         ssl_require=True,
+#     )
+# }
 
 # configuración s3
 DEFAULT_FILE_STORAGE = 'Configuracion.storage_backends.MediaStorage'
