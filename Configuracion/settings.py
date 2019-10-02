@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'prueba'
+    'prueba',
     'bootstrap4',
     'import_export',
     'storage',
